@@ -433,3 +433,15 @@ body{
 .score a{
   border-bottom-color: rgba(0,0,0,0.16);
 }
+/* =========================
+   ENTRANCE FADE
+   ========================= */
+
+body{
+  opacity: 0;
+  transition: opacity 600ms cubic-bezier(.25,.8,.25,1);
+}
+
+body.is-loaded{
+  opacity: 1;
+}
