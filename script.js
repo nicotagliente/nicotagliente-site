@@ -164,3 +164,11 @@ function wireListen(data) {
 window.addEventListener("load", () => {
   document.body.classList.add("is-loaded");
 });
+// scroll detection for title compression
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 40) {
+    document.body.classList.add("is-scrolled");
+  } else {
+    document.body.classList.remove("is-scrolled");
+  }
+});
