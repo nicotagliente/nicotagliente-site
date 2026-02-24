@@ -453,5 +453,22 @@ body.is-loaded{
   transform-origin: left center;
   will-change: transform;
 }
+/* =================================
+   REMOVE ALL VERTICAL LINES
+   ================================= */
 
+body::before,
+body::after,
+.wrap::before,
+.wrap::after,
+.panel::before,
+.panel::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+.vertical-line{
+  display: none !important;
+}
 
