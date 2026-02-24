@@ -56,19 +56,16 @@ body{
 
 @keyframes facsimileBreath{
   0%{
-    opacity: 0.082;
-    transform: scale(1.010) translateY(0%);
-    filter: blur(0px);
+    opacity: 0.085;
+    transform: scale(1.006);
   }
   50%{
-    opacity: 0.090;
-    transform: scale(1.012) translateY(-0.10%);
-    filter: blur(0.12px);
+    opacity: 0.088;
+    transform: scale(1.008);
   }
   100%{
-    opacity: 0.082;
-    transform: scale(1.010) translateY(0%);
-    filter: blur(0px);
+    opacity: 0.085;
+    transform: scale(1.006);
   }
 }
 
