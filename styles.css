@@ -47,11 +47,9 @@ body{
   mix-blend-mode: multiply;
 
   opacity: 0.085;
-  transform: scale(1.03);
-  filter: none;
+  transform: scale(1.01);
 
-  will-change: transform, opacity, filter;
-  animation: none;
+  animation: none !important;
 }
 
 @keyframes facsimileBreath{
