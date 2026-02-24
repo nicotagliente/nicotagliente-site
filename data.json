@@ -1,0 +1,53 @@
+{
+  "profile": {
+    "name": "Nico Tagliente",
+    "tagline": "Music / Performances / Bio",
+    "bio": "Educated in Vienna and Rome, he began his career in Sweden, where distance and winter light reshaped his sense of sound.\n\nA classical organ concert performer, he has played some of the most beautiful historical organs in the world — instruments that still carry centuries of breath and architecture. Early music, from ancient modes to Renaissance and Baroque counterpoint, is approached as a present act of listening.\n\nAlongside this, he performs with Ableton Push. Electronics are not a rupture, but a continuation. Voltage becomes breath. Code becomes counterpoint.\n\nFrom ancient Greece to digital sequencing, his work traces a single anthropological continuum: one culture, unfolding across time.\n\nOnly the instrument changes. The human impulse — to shape air into meaning — remains.",
+    "audio_src": "./audio/artic-song.wav",
+    "audio_volume": 0.75
+  },
+  "links": [
+    {
+      "label": "Spotify",
+      "url": "https://open.spotify.com/playlist/7eyrZu43UpwYrp3MN0d3W7?si=e69aeb5da79941ad"
+    },
+    {
+      "label": "Apple Music",
+      "url": "https://music.apple.com/it/artist/zauberland/1533867151"
+    },
+    {
+      "label": "YouTube Music",
+      "url": "https://music.youtube.com/playlist?list=OLAK5uy_nyujBJI4ROeQOms9BmWLGW_N_NwtFpge0"
+    },
+    {
+      "label": "YouTube",
+      "url": "https://youtube.com/@nicotagliente"
+    },
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/nicotagliente/?hl=it"
+    },
+    {
+      "label": "TikTok",
+      "url": "https://www.tiktok.com/@nico.tagliente"
+    },
+    {
+      "label": "Facebook",
+      "url": "https://www.facebook.com/nicotaglientepage"
+    },
+    {
+      "label": "Scores (Drive)",
+      "url": "https://drive.google.com/drive/folders/1j3O0F_BavjMlMrD0ywvoWx0YrEquLlJr?usp=drive_link"
+    }
+  ],
+  "scores": [
+    {
+      "title": "Scores (PDF)",
+      "description": "Google Drive folder",
+      "tags": [
+        "pdf"
+      ],
+      "file": "https://drive.google.com/drive/folders/1j3O0F_BavjMlMrD0ywvoWx0YrEquLlJr?usp=drive_link"
+    }
+  ]
+}
