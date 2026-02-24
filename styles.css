@@ -268,3 +268,45 @@ h1{
   50%  { transform: scale(1.12) translateY(-0.18%) rotate(0.35deg); }
   100% { transform: scale(1.00) translateY(0%) rotate(0deg); }
 }
+/* ===== ZERO-JITTER MODE ===== */
+
+/* stop page scroll (prevents fixed-layer jitter) */
+html, body{
+  height: 100%;
+  overflow: hidden;
+}
+
+/* facsimile: no transform, no animation, no will-change */
+#facsimile{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background: url("./background.jpg") center / cover no-repeat;
+  mix-blend-mode: multiply;
+
+  opacity: 0.085 !important;
+  transform: none !important;
+  animation: none !important;
+  transition: none !important;
+  filter: none !important;
+  will-change: auto !important;
+}
+
+/* content scrolls like a book page */
+.wrap{
+  position: relative;
+  z-index: 1;
+
+  height: 100vh;
+  overflow: auto;
+
+  /* nice scrolling */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+
+  /* keep your “book” narrow */
+  max-width: 600px;
+  margin: 0 auto;
+}
