@@ -344,26 +344,42 @@ body{
 
 /* Panels become “display cases” */
 .panel{
+  position: relative;
+  margin: 16px 0;
+  padding: 16px 16px;
+
   border-radius: 26px;
-  border: 1px solid var(--hair);
+  border: 1px solid rgba(0,0,0,0.065);
+
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.62), rgba(255,255,255,0.40)),
-    radial-gradient(120% 140% at 18% 10%, rgba(225,178,120,0.14), transparent 55%),
-    var(--glass);
-  box-shadow: var(--shadow2), inset 0 1px 0 rgba(255,255,255,0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+    /* top sheen */
+    linear-gradient(180deg, rgba(255,255,255,0.38), rgba(255,255,255,0.16)),
+    /* champagne whisper */
+    radial-gradient(120% 140% at 18% 10%, rgba(225,178,120,0.10), transparent 55%),
+    /* base glass */
+    rgba(255,255,255,0.24);
+
+  box-shadow:
+    0 24px 70px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.70);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
-/* micro “glass edge” highlight */
 .panel::before{
   content:"";
   position:absolute;
   inset: 0;
   border-radius: 26px;
   pointer-events:none;
-  background: linear-gradient(135deg, rgba(255,255,255,0.55), transparent 38%);
-  opacity: 0.35;
+
+  /* glass edge highlight */
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.42), transparent 42%),
+    linear-gradient(225deg, rgba(255,255,255,0.18), transparent 55%);
+
+  opacity: 0.18;
 }
 
 /* titles feel more curatorial */
