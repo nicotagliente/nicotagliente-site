@@ -1,0 +1,811 @@
+/* Zen Nordic — black & white, lots of breathing space */
+:root{
+  --bg: #f6f6f3;
+  --fg: #0b0b0b;
+  --muted: rgba(11,11,11,.62);
+  --hair: rgba(11,11,11,.12);
+  --soft: rgba(11,11,11,.04);
+  --max: 880px;
+  --r: 18px;
+  --shadow: 0 10px 30px rgba(0,0,0,.06);
+}
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: Sora, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+a{ color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible{
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+.skip{ position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+.skip:focus{ left:16px; top:16px; width:auto; height:auto; padding:10px 12px; border:1px solid var(--hair); background:var(--bg); z-index:999; }
+.wrap{ max-width: var(--max); margin: 0 auto; padding: 56px 18px 48px; }
+.hero{ display:flex; gap: 18px; align-items:flex-start; padding: 10px 4px 34px; }
+.kicker{ margin:0 0 8px; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+h1{ margin:0; font-family: 'Cormorant Garamond', ui-serif, Georgia, serif; font-weight: 600; font-size: clamp(40px, 6vw, 64px); letter-spacing: -0.02em; }
+.sub{ margin: 10px 0 0; color: var(--muted); font-size: 16px; max-width: 60ch; }
+
+.panel{ border: 1px solid var(--hair); border-radius: var(--r); padding: 20px; margin: 14px 0; background: #fff; box-shadow: var(--shadow); }
+.panel-head{ display:flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.panel-head h2{ margin:0; font-size: 16px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
+.muted{ color: var(--muted); }
+.tiny{ font-size: 12px; }
+
+.grid{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (min-width: 720px){ .grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.btn{
+  display:flex; align-items:center; justify-content: space-between; gap: 12px;
+  padding: 14px 14px; border: 1px solid var(--hair); border-radius: 14px;
+  background: var(--bg);
+  transition: transform .06s ease, background .12s ease, border-color .12s ease;
+}
+.btn:hover{ background: var(--soft); border-color: rgba(11,11,11,.22); transform: translateY(-1px); }
+.btn .label{ font-weight: 500; }
+.btn .hint{ color: var(--muted); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+
+.embed{ margin-top: 14px; border-top: 1px solid var(--hair); padding-top: 12px; }
+summary{ cursor:pointer; user-select:none; color: var(--muted); }
+.embed-grid{ display:grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
+@media (min-width: 720px){ .embed-grid{ grid-template-columns: 1fr 1fr; } }
+.card{ border: 1px solid var(--hair); border-radius: 14px; padding: 14px; background: var(--bg); }
+.card h3{ margin:0 0 10px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.iframe{ border-radius: 12px; overflow:hidden; border: 1px solid var(--hair); background: #fff; }
+.ratio{ aspect-ratio: 16 / 9; }
+
+.scores-head{ display:flex; gap: 10px; align-items:center; margin: 10px 0 12px; }
+.search{ flex: 1; padding: 12px 12px; border: 1px solid var(--hair); border-radius: 14px; font-size: 14px; }
+.ghost{ padding: 12px 12px; border: 1px solid var(--hair); border-radius: 14px; background: var(--bg); cursor:pointer; }
+.ghost:hover{ background: var(--soft); }
+
+.scores{ display:grid; grid-template-columns: 1fr; gap: 10px; }
+.scores.tiles{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 720px){ .scores.tiles{ grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.score{
+  border: 1px solid var(--hair); border-radius: 14px; padding: 14px; background: var(--bg);
+  display:flex; align-items:flex-start; justify-content: space-between; gap: 12px;
+}
+.score .meta{ min-width: 0; }
+.score .title{ margin:0; font-weight: 600; }
+.score .desc{ margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+.pill{ border: 1px solid var(--hair); border-radius: 999px; padding: 6px 10px; font-size: 12px; white-space: nowrap; }
+
+.inline{ text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.note{ margin-top: 10px; }
+.foot{ padding: 18px 8px 0; text-align:center; }
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:url('./background.jpg');
+  background-size:cover;
+  background-position:center;
+  opacity:0.08;
+  filter:grayscale(100%) contrast(110%);
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* IRCAM refined laboratory aesthetic */
+
+body{
+  font-family: Sora, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  background-color: var(--bg);
+}
+
+/* Subtle grain texture overlay */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image: radial-gradient(rgba(0,0,0,0.015) 1px, transparent 1px);
+  background-size: 3px 3px;
+  pointer-events:none;
+  z-index:-2;
+}
+
+h1{
+  font-weight:500;
+  letter-spacing:-0.03em;
+}
+
+.kicker{
+  letter-spacing:0.35em;
+  font-weight:500;
+  opacity:0.7;
+}
+
+.panel{
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.btn{
+  font-weight:500;
+}
+
+.sub{
+  font-size:17px;
+  letter-spacing:-0.01em;
+}
+
+/* ================= RADICAL IRCAM EXPERIMENTAL ================= */
+
+/* Deeper ink contrast */
+:root{
+  --fg:#0a0a0a;
+  --ink:#000000;
+}
+
+/* Breathing facsimile refined */
+body::before{
+  content:"";
+  position:fixed;
+  inset:-3%;
+  background-image:url('./background.jpg');
+  background-size:cover;
+  background-position:center;
+  opacity:0.06;
+  filter:grayscale(100%) contrast(120%);
+  pointer-events:none;
+  z-index:-1;
+  transform:scale(1.025);
+  animation: breathe 32s ease-in-out infinite;
+  will-change:transform, opacity;
+}
+
+@keyframes breathe{
+  0%{transform:scale(1.025) translateY(0%); opacity:0.055;}
+  50%{transform:scale(1.04) translateY(-0.4%); opacity:0.085;}
+  100%{transform:scale(1.025) translateY(0%); opacity:0.06;}
+}
+
+/* Blueprint vertical line */
+.wrap{
+  position:relative;
+}
+
+.wrap::before{
+  content:"";
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:38%;
+  width:1px;
+  background:rgba(0,0,0,0.08);
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* Museum contrast name */
+h1{
+  font-family: 'Cormorant Garamond', serif;
+  font-weight:600;
+  letter-spacing:-0.04em;
+}
+
+#name{
+  text-transform:none;
+}
+
+/* Experimental subtle glitch micro shift */
+h1 span{
+  display:inline-block;
+  transition:transform 0.3s ease;
+}
+
+h1:hover span{
+  transform:translateX(1px);
+}
+
+/* Deep hover ink */
+.btn:hover,
+a:hover{
+  color:var(--ink);
+  transition:color 120ms ease;
+}
+
+/* Slight panel destabilization */
+.panel{
+  background:rgba(255,255,255,0.82);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(0,0,0,0.06);
+}
+
+/* Increase letter spacing in kicker for tension */
+.kicker{
+  letter-spacing:0.45em;
+  opacity:0.65;
+}
+
+
+/* ENTRY / LOAD */
+body{
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+body.is-ready{
+  opacity: 1;
+}
+.wrap{
+  transform: translateY(10px);
+  opacity: 0;
+  transition: transform 900ms cubic-bezier(.2,.9,.2,1), opacity 900ms ease;
+}
+body.is-ready .wrap{
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Audio-reactive controls */
+.audio-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.file{
+  position:relative;
+  overflow:hidden;
+}
+.file input{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  cursor:pointer;
+}
+
+/* Identity blocks */
+.identity{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 720px){
+  .identity{ grid-template-columns: 1fr 1fr; }
+}
+.id-block{
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(255,255,255,0.65);
+}
+.id-label{
+  margin:0 0 8px;
+  font-size: 12px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.55);
+}
+.id-text{ margin:0; color: rgba(0,0,0,0.78); }
+.serif{ font-family: 'Cormorant Garamond', serif; }
+.sans{ font-family: 'Inter', sans-serif; }
+
+/* Reactive variables (updated by JS) */
+:root{
+  --react: 0;
+}
+body::before{
+  opacity: calc(0.055 + (var(--react) * 0.04));
+  transform: scale(calc(1.025 + (var(--react) * 0.02))) translateY(calc(var(--react) * -0.4%));
+}
+.wrap::before{
+  opacity: calc(0.08 + (var(--react) * 0.12));
+}
+
+
+/* ================= CONTEMPORARY MUSEUM REDESIGN ================= */
+
+body{
+  background:#f2f2ef;
+  color:#111;
+}
+
+/* Large negative space layout */
+.wrap{
+  max-width:1200px;
+  padding:120px 60px 80px;
+}
+
+/* Asymmetrical grid */
+main{
+  display:grid;
+  grid-template-columns: 1fr 2fr;
+  gap:80px;
+}
+
+@media (max-width: 900px){
+  main{
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+}
+
+/* Vertical side identity column */
+.hero{
+  position:sticky;
+  top:120px;
+  align-self:start;
+  flex-direction:column;
+  gap:24px;
+}
+
+/* Name as exhibition title */
+h1{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(48px, 6vw, 96px);
+  font-weight:500;
+  line-height:0.95;
+  letter-spacing:-0.05em;
+}
+
+/* Tagline minimal caption */
+.sub{
+  font-size:14px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.55);
+}
+
+/* Remove heavy panels – make them float */
+.panel{
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  padding:0;
+  margin-bottom:80px;
+}
+
+/* Section headings museum style */
+.panel-head h2{
+  font-size:12px;
+  letter-spacing:0.4em;
+  text-transform:uppercase;
+  font-weight:600;
+  color:rgba(0,0,0,0.45);
+}
+
+/* Links as typographic list */
+.grid{
+  grid-template-columns:1fr;
+}
+
+.btn{
+  border:none;
+  padding:10px 0;
+  font-size:20px;
+  font-weight:400;
+  border-bottom:1px solid rgba(0,0,0,0.1);
+}
+
+.btn:hover{
+  color:#000;
+  border-bottom:1px solid #000;
+}
+
+/* Scores refined listing */
+.score{
+  border:none;
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  padding:18px 0;
+  background:transparent;
+}
+
+.score .title{
+  font-size:18px;
+  font-weight:500;
+}
+
+.score .desc{
+  font-size:14px;
+  letter-spacing:0.02em;
+  color:rgba(0,0,0,0.55);
+}
+
+/* Blueprint line refined */
+.wrap::before{
+  left:22%;
+  background:rgba(0,0,0,0.06);
+}
+
+/* Fade in slower, more elegant */
+body{
+  transition: opacity 1200ms ease;
+}
+.wrap{
+  transition: transform 1400ms cubic-bezier(.2,.9,.2,1), opacity 1400ms ease;
+}
+
+/* Micro typographic precision */
+.kicker{
+  display:none;
+}
+
+/* Footer minimal */
+.foot{
+  margin-top:120px;
+  font-size:12px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.4);
+}
+
+
+/* ARCHIVAL INDEX */
+.index-row{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:18px;
+  overflow-x:auto;
+  padding: 6px 0 2px;
+  scrollbar-width: thin;
+}
+.index-row::-webkit-scrollbar{ height:8px; }
+.index-row::-webkit-scrollbar-thumb{ background:rgba(0,0,0,0.12); border-radius:999px; }
+
+.index-row .btn{
+  flex: 0 0 auto;
+  padding: 8px 0;
+  font-size: 14px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  white-space: nowrap;
+  position: relative;
+}
+.index-row .btn::after{
+  content:"•";
+  position:absolute;
+  right:-12px;
+  top: 50%;
+  transform: translateY(-52%);
+  color: rgba(0,0,0,0.25);
+}
+.index-row .btn:last-child::after{ content:""; }
+.index-row .btn .hint{ display:none; }
+
+.curatorial-text{
+  margin: 0;
+  max-width: 70ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.72);
+}
+
+/* Exhibition year */
+.exyear{
+  margin: 18px 0 0;
+  font-size: 12px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.45);
+}
+
+/* Variable typography scaling on scroll */
+:root{ --titleScale: 1; }
+#name{
+  transform-origin: left top;
+  transform: scale(var(--titleScale));
+  will-change: transform;
+}
+
+
+/* GLASS TINT (ultra subtle) */
+:root{
+  --glass: rgba(170, 210, 255, 0.075);
+  --glass2: rgba(205, 235, 255, 0.05);
+  --edge: rgba(0,0,0,0.06);
+}
+
+.panel{
+  background:
+    linear-gradient(180deg, var(--glass), transparent 55%),
+    linear-gradient(0deg, var(--glass2), transparent 65%);
+  border-color: var(--edge);
+}
+
+.id-block{
+  background:
+    linear-gradient(180deg, rgba(120, 170, 255, 0.045), transparent 70%),
+    rgba(255,255,255,0.55);
+  border-color: var(--edge);
+}
+
+/* Make typography a bit more airy */
+.panel-head h2{
+  letter-spacing: .46em;
+}
+.btn{
+  letter-spacing: .22em;
+}
+
+
+/* GLASS EDGE HIGHLIGHT */
+.panel{
+  box-shadow:
+    0 18px 48px rgba(0,0,0,0.045),
+    inset 0 1px 0 rgba(255,255,255,0.65);
+}
+
+
+
+
+
+/* ================= TUNING v15 (Champagne Book Layout) ================= */
+
+:root{
+  --bg: #f6f3ee;
+  --champagne: rgba(225, 190, 150, 0.12);
+  --champagne2: rgba(210, 170, 120, 0.08);
+}
+
+/* Narrower page – book proportion */
+.wrap{
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 120px 48px 100px;
+}
+
+@media (max-width: 900px){
+  .wrap{
+    max-width: 92%;
+    padding: 80px 28px 60px;
+  }
+}
+
+/* Remove museum grid feel – make it vertical like a book */
+main{
+  display:block;
+}
+
+/* Champagne glass background */
+body{
+  background:
+    radial-gradient(900px 500px at 20% 10%, var(--champagne), transparent 60%),
+    radial-gradient(700px 400px at 85% 15%, var(--champagne2), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.55), transparent 35%),
+    var(--bg);
+}
+
+/* Slight paper softness */
+.panel{
+  background:
+    linear-gradient(180deg, rgba(225,190,150,0.08), transparent 65%),
+    rgba(255,255,255,0.6);
+}
+
+/* Title slightly more vertical rhythm */
+h1{
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 1.05;
+}
+
+/* Links more subtle */
+.index-row{
+  gap:14px;
+}
+
+.index-row .btn{
+  font-size: 11px;
+  letter-spacing: .28em;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.index-row .btn:hover{
+  border-bottom: 1px solid rgba(0,0,0,0.6);
+}
+
+/* Bio like book paragraph */
+.bio{
+  font-size: 15px;
+  line-height: 1.85;
+  max-width: 40ch;
+  color: rgba(0,0,0,0.65);
+}
+
+
+
+/* ================= Contemporary Art Tweaks (v16) ================= */
+.wrap{ max-width: 660px; } /* even more book-like */
+.panel{ border-radius: 22px; }
+
+/* Pills: fully contain text */
+.index-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  overflow:visible;
+  padding: 8px 0 0;
+}
+.index-row .btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 999px;
+  padding: 10px 14px;
+  background:
+    linear-gradient(180deg, rgba(225,190,150,0.11), rgba(255,255,255,0.35));
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  font-size: 11px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+}
+.index-row .btn::after{ content:""; } /* remove dots */
+.index-row .btn:hover{
+  border-color: rgba(0,0,0,0.18);
+  color: #000;
+}
+
+/* Sound panel */
+.sound-row{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.sound .ghost{ min-width: 150px; }
+
+/* Make sections feel like pages */
+.panel{ padding: 18px 18px; margin: 16px 0; }
+.panel-head{ margin-bottom: 10px; }
+.panel-head h2{ font-size: 11px; letter-spacing: .42em; }
+
+/* Softer champagne glass wash */
+body{
+  background:
+    radial-gradient(980px 520px at 18% 10%, rgba(225,190,150,0.16), transparent 62%),
+    radial-gradient(760px 420px at 86% 14%, rgba(210,170,120,0.10), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,0.62), transparent 34%),
+    var(--bg);
+}
+
+
+/* ================= Zen Refinement (v17) ================= */
+
+/* More present champagne glass (still transparent) */
+:root{
+  --bg: #f7f2ea;
+  --champ: rgba(232, 190, 140, 0.22);
+  --champ2: rgba(216, 165, 110, 0.14);
+  --champ3: rgba(255, 230, 195, 0.18);
+  --edge: rgba(0,0,0,0.055);
+}
+
+/* Book column: slimmer */
+.wrap{
+  max-width: 600px;
+  padding: 110px 44px 90px;
+}
+@media (max-width: 900px){
+  .wrap{ max-width: 94%; padding: 78px 22px 60px; }
+}
+
+/* Essential type */
+body{
+  font-family: Sora, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 300;
+  background:
+    radial-gradient(980px 520px at 16% 8%, var(--champ), transparent 60%),
+    radial-gradient(760px 420px at 86% 14%, var(--champ2), transparent 62%),
+    radial-gradient(900px 520px at 50% 0%, var(--champ3), transparent 65%),
+    linear-gradient(180deg, rgba(255,255,255,0.62), transparent 34%),
+    var(--bg);
+}
+
+/* Title stays museum; everything else quiet */
+h1{
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+.sub{
+  font-size: 12px;
+  letter-spacing: .34em;
+  opacity: .75;
+}
+
+/* Panels more zen */
+.panel{
+  border: 1px solid var(--edge);
+  border-radius: 22px;
+  padding: 16px 16px;
+  background:
+    linear-gradient(180deg, rgba(232,190,140,0.10), transparent 68%),
+    rgba(255,255,255,0.55);
+  box-shadow:
+    0 18px 48px rgba(0,0,0,0.045),
+    inset 0 1px 0 rgba(255,255,255,0.72);
+}
+
+/* Section headings quieter */
+.panel-head h2{
+  font-size: 10px;
+  letter-spacing: .48em;
+  opacity: .65;
+}
+
+/* Link pills: smaller and more precise */
+.index-row{
+  gap: 8px;
+  padding-top: 6px;
+}
+.index-row .btn{
+  padding: 8px 10px;
+  font-size: 10px;
+  letter-spacing: .30em;
+  border: 1px solid rgba(0,0,0,0.055);
+  background:
+    linear-gradient(180deg, rgba(232,190,140,0.14), rgba(255,255,255,0.30));
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.035),
+    inset 0 1px 0 rgba(255,255,255,0.75);
+  line-height: 1;
+}
+.index-row .btn:hover{
+  border-color: rgba(0,0,0,0.16);
+}
+
+/* Ghost buttons smaller (Sound / Audio reactive controls) */
+.ghost{
+  padding: 10px 10px;
+  font-size: 12px;
+  border-radius: 999px;
+  letter-spacing: .12em;
+}
+
+/* Search field more minimal */
+.search{
+  padding: 10px 12px;
+  border-radius: 999px;
+  border-color: rgba(0,0,0,0.06);
+}
+
+/* Blueprint line softer + warm */
+.wrap::before{
+  background: linear-gradient(180deg, rgba(0,0,0,0.045), rgba(0,0,0,0.02));
+  box-shadow: 0 0 0 1px rgba(232,190,140,0.08);
+}
+
+/* Bio slightly tighter */
+.bio{
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(0,0,0,0.62);
+  margin-top: 16px;
+}
+
+
+/* LISTEN button */
+#listenBtn{
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+
+
+
+/* ================= FINAL REACTIVE OVERRIDE (v22) ================= */
+:root{ --react: 0; }
+
+/* Kill any conflicting keyframe animation on the facsimile */
+body::before{
+  animation: none !important;
+  transition: opacity 120ms linear, transform 120ms linear !important;
+
+  /* Force reactive motion to win */
+  opacity: calc(0.045 + (var(--react) * 0.18)) !important;
+  transform: scale(calc(1.02 + (var(--react) * 0.09))) translateY(calc(var(--react) * -1.2%)) !important;
+}

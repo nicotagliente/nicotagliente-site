@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nico Tagliente — Links</title>
+  <meta name="description" content="A minimal one-page hub for music links and scores." />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+
+  <main id="content" class="wrap museum-grid">
+    <header class="hero">
+<div class="hero-text">
+        <p class="kicker" id="kicker" style="display:none"></p>
+        <h1 id="name"><span>Nico</span> <span>Tagliente</span></h1>
+        <p class="sub" id="tagline">Music / Performances / Bio</p>
+        <p class="bio" id="bio"></p>
+</div>
+    </header>
+
+
+    <section class="panel sound" aria-labelledby="sound-title" id="soundPanel">
+      <div class="panel-head">
+        <h2 id="sound-title">Sound</h2>
+        <p class="muted">Optional.</p>
+      </div>
+      <div class="sound-row">
+        <button class="ghost" id="listenBtn" type="button" aria-pressed="false">LISTEN</button>
+        <p class="muted tiny" id="soundHint">One gesture. Sound + subtle reactivity.</p>
+      </div>
+      <audio id="bgAudio" preload="auto" loop></audio>
+    </section>
+
+    <section class="panel" aria-labelledby="scores-title">
+      <div class="panel-head">
+        <h2 id="scores-title">Scores (PDF)</h2>
+        <p class="muted">Download. Print. Play.</p>
+      </div>
+
+      <div class="scores-head">
+        <input id="scoreSearch" class="search" type="search" placeholder="Search scores…" autocomplete="off" />
+        <button id="toggleView" class="ghost" type="button" aria-pressed="false">View: List</button>
+      </div>
+
+      <div id="scores" class="scores" role="list"></div>
+
+      </section>
+
+    
+    
+<section class="panel" aria-labelledby="links-title">
+      <div id="links" class="index-row" role="list"></div>
+
+      <details class="embed">
+        <summary>Show embeds (Spotify / YouTube) — optional</summary>
+        <div class="embed-grid">
+          <div class="card">
+            <h3>Spotify</h3>
+            <div class="iframe">
+              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/7eyrZu43UpwYrp3MN0d3W7?utm_source=generator" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Spotify embed"></iframe>
+            </div>
+            <p class="muted tiny">Replace with any embed (artist/album/playlist).</p>
+          </div>
+
+          <div class="card">
+            <h3>YouTube</h3>
+            <div class="iframe ratio">
+              <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed?listType=playlist&list=OLAK5uy_nyujBJI4ROeQOms9BmWLGW_N_NwtFpge0" title="YouTube embed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="muted tiny">Or paste the embed for your channel/video.</p>
+          </div>
+        </div>
+      </details>
+    </section>
+    <footer class="foot">
+      <p class="muted tiny">
+        <span id="year"></span> © <span id="name2">Nico Tagliente</span>
+        <span id="emailSep" aria-hidden="true" style="display:none"> · </span>
+        <a id="emailLink" class="inline" href="#" style="display:none"></a>
+      </p>
+    </footer>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>
