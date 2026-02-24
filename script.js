@@ -191,3 +191,7 @@ window.addEventListener("load", () => {
   }
   window.addEventListener("scroll", onScroll);
 });
+window.addEventListener("load", () => {
+  const name = document.getElementById("name");
+  if (name) name.style.transform = "scale(0.8)";
+});
