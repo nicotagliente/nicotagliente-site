@@ -164,20 +164,30 @@ function wireListen(data) {
 window.addEventListener("load", () => {
   document.body.classList.add("is-loaded");
 });
-// scroll detection for title compression
-// continuous scroll compression (for .wrap scrolling layout)
+// UNIVERSAL scroll compression
 window.addEventListener("load", () => {
   const name = document.getElementById("name");
   const wrap = document.querySelector(".wrap");
-  if (!name || !wrap) return;
+  if (!name) return;
 
   const maxScroll = 400;
 
-  wrap.addEventListener("scroll", () => {
-    const scroll = Math.min(wrap.scrollTop, maxScroll);
-    const progress = scroll / maxScroll;
-    const scale = 1 - (progress * 0.04); // 4% max reduction
+  const getScroll = () => {
+    if (wrap && wrap.scrollTop > 0) {
+      return wrap.scrollTop;
+    }
+    return window.scrollY || document.documentElement.scrollTop;
+  };
 
+  const onScroll = () => {
+    const scroll = Math.min(getScroll(), maxScroll);
+    const progress = scroll / maxScroll;
+    const scale = 1 - (progress * 0.04);
     name.style.transform = `scale(${scale})`;
-  });
+  };
+
+  if (wrap) {
+    wrap.addEventListener("scroll", onScroll);
+  }
+  window.addEventListener("scroll", onScroll);
 });
