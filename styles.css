@@ -52,20 +52,7 @@ body{
   animation: none !important;
 }
 
-@keyframes facsimileBreath{
-  0%{
-    opacity: 0.085;
-    transform: scale(1.003);
-  }
-  50%{
-    opacity: 0.087;
-    transform: scale(1.004);
-  }
-  100%{
-    opacity: 0.085;
-    transform: scale(1.003);
-  }
-}
+
 
 /* Content above facsimile */
 .wrap, main, header, section, footer{
