@@ -445,3 +445,15 @@ body{
 body.is-loaded{
   opacity: 1;
 }
+/* =========================
+   TITLE SCROLL COMPRESSION
+   ========================= */
+
+#name{
+  transition: transform 400ms cubic-bezier(.25,.8,.25,1);
+  transform-origin: left center;
+}
+
+body.is-scrolled #name{
+  transform: scale(0.96);
+}
