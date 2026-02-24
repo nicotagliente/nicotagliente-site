@@ -138,29 +138,33 @@ function wireListen(data){
   if(!btn || !audio) return;
 
   const src = (data?.profile?.audio_src || '').trim();
-  if(!src){
-    const panel = document.getElementById('soundPanel');
-    if(panel) panel.style.display = 'none';
-    return;
-  }
+  if(!src) return;
 
   audio.src = src;
-  audio.volume = typeof data?.profile?.audio_volume === 'number' ? data.profile.audio_volume : 0.75;
   audio.loop = true;
+  audio.preload = "auto";
 
-  const accent = new AudioAccent();
-  let accentReady = false;
-  let on = false;
+  let playing = false;
 
-  const setUI = () => {
-    btn.setAttribute('aria-pressed', String(on));
-    btn.textContent = on ? 'LISTENING' : 'LISTEN';
-    if(hint){
-      hint.textContent = on
-        ? (accentReady ? 'On. Breathing + audio accent.' : 'On. Breathing (audio accent unavailable).')
-        : 'One gesture. Sound + breathing facsimile.';
+  btn.addEventListener('click', async () => {
+    try{
+      if(!playing){
+        await audio.play();
+        playing = true;
+        btn.textContent = "LISTENING";
+        if(hint) hint.textContent = "On.";
+      }else{
+        audio.pause();
+        playing = false;
+        btn.textContent = "LISTEN";
+        if(hint) hint.textContent = "Stopped.";
+      }
+    }catch(e){
+      console.log(e);
+      if(hint) hint.textContent = "Tap again.";
     }
-  };
+  });
+}
 
   btn.addEventListener('click', async () => {
     try{
