@@ -160,3 +160,7 @@ function wireListen(data) {
     if (bio) bio.textContent = "Update data.json in the repository.";
   }
 })();
+// entrance fade
+window.addEventListener("load", () => {
+  document.body.classList.add("is-loaded");
+});
