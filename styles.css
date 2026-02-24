@@ -809,3 +809,17 @@ body::before{
   opacity: calc(0.045 + (var(--react) * 0.18)) !important;
   transform: scale(calc(1.02 + (var(--react) * 0.09))) translateY(calc(var(--react) * -1.2%)) !important;
 }
+/* ====== HARD REACTIVE BACKGROUND (FINAL) ====== */
+:root{ --react: 0; }
+
+/* the facsimile layer MUST react */
+body::before{
+  animation: none !important;
+  will-change: transform, opacity, filter;
+
+  opacity: calc(0.05 + (var(--react) * 0.22)) !important;
+  transform: scale(calc(1.02 + (var(--react) * 0.10))) translateY(calc(var(--react) * -1.3%)) !important;
+
+  /* optional: adds “glass shimmer” without being cheesy */
+  filter: blur(calc(var(--react) * 0.35px)) !important;
+}
