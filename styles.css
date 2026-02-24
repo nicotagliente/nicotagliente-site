@@ -283,6 +283,6 @@ h1{
 
 @keyframes facsimileBreath_TEST{
   0%   { transform: scale(1.00) translateY(0%) rotate(0deg); }
-  50%  { transform: scale(1.12) translateY(-3.5%) rotate(0.35deg); }
+  50%  { transform: scale(1.12) translateY(-0.18%) rotate(0.35deg); }
   100% { transform: scale(1.00) translateY(0%) rotate(0deg); }
 }
