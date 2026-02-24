@@ -165,16 +165,19 @@ window.addEventListener("load", () => {
   document.body.classList.add("is-loaded");
 });
 // scroll detection for title compression
-// continuous scroll compression
-window.addEventListener("scroll", () => {
+// continuous scroll compression (for .wrap scrolling layout)
+window.addEventListener("load", () => {
   const name = document.getElementById("name");
-  if (!name) return;
+  const wrap = document.querySelector(".wrap");
+  if (!name || !wrap) return;
 
-  const maxScroll = 400; // distanza entro cui avviene la compressione
-  const scroll = Math.min(window.scrollY, maxScroll);
+  const maxScroll = 400;
 
-  const progress = scroll / maxScroll; // 0 → 1
-  const scale = 1 - (progress * 0.04); // riduzione massima 4%
+  wrap.addEventListener("scroll", () => {
+    const scroll = Math.min(wrap.scrollTop, maxScroll);
+    const progress = scroll / maxScroll;
+    const scale = 1 - (progress * 0.04); // 4% max reduction
 
-  name.style.transform = `scale(${scale})`;
+    name.style.transform = `scale(${scale})`;
+  });
 });
