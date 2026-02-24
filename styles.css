@@ -51,7 +51,7 @@ body{
   filter: none;
 
   will-change: transform, opacity, filter;
-  animation: facsimileBreath 64s ease-in-out infinite;
+  animation: facsimileBreath 600s ease-in-out infinite;
 }
 
 @keyframes facsimileBreath{
