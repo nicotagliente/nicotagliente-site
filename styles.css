@@ -310,3 +310,110 @@ html, body{
   max-width: 600px;
   margin: 0 auto;
 }
+/* =========================
+   GLASS CARDS UPGRADE
+   (paste at the END of styles.css)
+   ========================= */
+
+:root{
+  --glass: rgba(255,255,255,0.54);
+  --glass-2: rgba(255,255,255,0.34);
+  --hair: rgba(0,0,0,0.075);
+  --hair2: rgba(0,0,0,0.10);
+  --shadow2: 0 24px 70px rgba(0,0,0,0.06);
+  --champ: rgba(225, 178, 120, 0.22); /* more present */
+}
+
+/* more “book-like” */
+.wrap{
+  max-width: 560px;
+  padding: 100px 40px 86px;
+}
+@media (max-width: 900px){
+  .wrap{ max-width: 92%; padding: 74px 18px 58px; }
+}
+
+/* refine the overall glass light */
+body{
+  background:
+    radial-gradient(900px 520px at 12% 6%, var(--champ), transparent 62%),
+    radial-gradient(700px 420px at 86% 16%, rgba(225,178,120,0.14), transparent 66%),
+    linear-gradient(180deg, rgba(255,255,255,0.62), transparent 42%),
+    var(--bg);
+}
+
+/* Panels become “display cases” */
+.panel{
+  border-radius: 26px;
+  border: 1px solid var(--hair);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.62), rgba(255,255,255,0.40)),
+    radial-gradient(120% 140% at 18% 10%, rgba(225,178,120,0.14), transparent 55%),
+    var(--glass);
+  box-shadow: var(--shadow2), inset 0 1px 0 rgba(255,255,255,0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* micro “glass edge” highlight */
+.panel::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: 26px;
+  pointer-events:none;
+  background: linear-gradient(135deg, rgba(255,255,255,0.55), transparent 38%);
+  opacity: 0.35;
+}
+
+/* titles feel more curatorial */
+.panel-head h2{
+  font-size: 9.5px;
+  letter-spacing: .52em;
+  color: rgba(0,0,0,0.56);
+}
+
+/* buttons: smaller, more gallery label */
+.pill{
+  padding: 9px 12px;
+  font-size: 11px;
+  letter-spacing: .26em;
+  border: 1px solid var(--hair);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.28));
+  box-shadow: 0 14px 36px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.72);
+}
+.pill:hover{
+  border-color: var(--hair2);
+}
+
+/* link pills: tighter + more “teca” */
+.index-row{
+  gap: 7px;
+}
+.index-row .link-pill{
+  padding: 7px 9px;
+  font-size: 9.5px;
+  letter-spacing: .34em;
+  border: 1px solid var(--hair);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.52), rgba(255,255,255,0.26));
+  box-shadow: 0 14px 36px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.72);
+}
+.index-row .link-pill:hover{
+  border-color: rgba(0,0,0,0.18);
+}
+
+/* score rows: glass list, less contrasty */
+.score{
+  border: 1px solid rgba(0,0,0,0.06);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.30));
+  box-shadow: 0 16px 44px rgba(0,0,0,0.045);
+}
+.score .title{
+  font-weight: 400;
+}
+.score a{
+  border-bottom-color: rgba(0,0,0,0.16);
+}
