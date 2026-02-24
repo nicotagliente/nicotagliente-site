@@ -454,6 +454,4 @@ body.is-loaded{
   transform-origin: left center;
 }
 
-body.is-scrolled #name{
-  transform: scale(0.96);
-}
+
