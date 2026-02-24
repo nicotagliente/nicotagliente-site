@@ -1,58 +1,75 @@
+// nicotagliente-site — stable script (links + scores + listen)
+// No AudioContext. No reactive. No side effects.
+
 const $ = (sel) => document.querySelector(sel);
 
-async function loadData(){
-  const res = await fetch('./data.json', { cache: 'no-store' });
-  if(!res.ok) throw new Error('data.json not found');
+async function loadData() {
+  const res = await fetch("./data.json", { cache: "no-store" });
+  if (!res.ok) throw new Error("data.json not found");
   return await res.json();
 }
 
-function renderLinks(links){
-  const wrap = $('#links');
-  wrap.innerHTML = '';
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value ?? "";
+}
+
+function renderLinks(links) {
+  const wrap = document.getElementById("links");
+  if (!wrap) return;
+
+  wrap.innerHTML = "";
   (links || []).forEach((l) => {
-    const a = document.createElement('a');
+    if (!l?.url || !l?.label) return;
+
+    const a = document.createElement("a");
     a.href = l.url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.className = 'link-pill';
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.className = "link-pill";
     a.textContent = l.label;
+
     wrap.appendChild(a);
   });
 }
 
-function renderScores(scores){
-  const out = $('#scores');
-  const q = ($('#scoreSearch').value || '').trim().toLowerCase();
+function renderScores(scores, query = "") {
+  const out = document.getElementById("scores");
+  if (!out) return;
 
-  out.innerHTML = '';
+  const q = (query || "").trim().toLowerCase();
+  out.innerHTML = "";
+
   (scores || [])
-    .filter(s => {
-      const text = `${s.title || ''} ${s.description || ''} ${(s.tags || []).join(' ')}`.toLowerCase();
+    .filter((s) => {
+      const text = `${s?.title || ""} ${s?.description || ""} ${(s?.tags || []).join(" ")}`.toLowerCase();
       return !q || text.includes(q);
     })
-    .forEach(s => {
-      const row = document.createElement('div');
-      row.className = 'score';
+    .forEach((s) => {
+      if (!s?.file) return;
 
-      const meta = document.createElement('div');
-      meta.className = 'meta';
+      const row = document.createElement("div");
+      row.className = "score";
 
-      const title = document.createElement('div');
-      title.className = 'title';
-      title.textContent = s.title || 'Score';
+      const meta = document.createElement("div");
+      meta.className = "meta";
 
-      const desc = document.createElement('div');
-      desc.className = 'desc';
-      desc.textContent = s.description || '';
+      const title = document.createElement("div");
+      title.className = "title";
+      title.textContent = s.title || "Score";
+
+      const desc = document.createElement("div");
+      desc.className = "desc";
+      desc.textContent = s.description || "";
 
       meta.appendChild(title);
       meta.appendChild(desc);
 
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = s.file;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.textContent = 'Open';
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = "Open";
 
       row.appendChild(meta);
       row.appendChild(a);
@@ -61,151 +78,85 @@ function renderScores(scores){
     });
 }
 
-/* ========= Optional Audio Accent (best-effort, never required) ========= */
-class AudioAccent {
-  constructor(){
-    this.ctx = null;
-    this.analyser = null;
-    this.source = null;
-    this.raf = null;
-    this.smooth = 0;
+function wireListen(data) {
+  const btn = document.getElementById("listenBtn");
+  const audio = document.getElementById("bgAudio");
+  const hint = document.getElementById("soundHint");
+  const panel = document.getElementById("soundPanel");
+
+  if (!btn || !audio) return;
+
+  const src = (data?.profile?.audio_src || "").trim();
+  if (!src) {
+    if (panel) panel.style.display = "none";
+    return;
   }
-
-  async tryAttach(el){
-    try{
-      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-      await this.ctx.resume();
-
-      this.analyser = this.ctx.createAnalyser();
-      this.analyser.fftSize = 1024;
-      this.analyser.smoothingTimeConstant = 0.85;
-
-      if(!el.__mediaSourceNode){
-        el.__mediaSourceNode = this.ctx.createMediaElementSource(el);
-      }
-      this.source = el.__mediaSourceNode;
-
-      try{ this.source.disconnect(); }catch(e){}
-      this.source.connect(this.analyser);
-
-      // keep graph alive without doubling sound
-      const g = this.ctx.createGain();
-      g.gain.value = 0.00001;
-      this.analyser.connect(g);
-      g.connect(this.ctx.destination);
-
-      return true;
-    }catch(e){
-      return false;
-    }
-  }
-
-  start(){
-    if(!this.analyser) return;
-    const buf = new Uint8Array(this.analyser.frequencyBinCount);
-
-    const tick = () => {
-      this.analyser.getByteFrequencyData(buf);
-
-      let sum = 0;
-      const s = Math.floor(buf.length * 0.04);
-      const e = Math.floor(buf.length * 0.20);
-      for(let i=s;i<e;i++) sum += buf[i];
-      const avg = sum / Math.max(1, (e-s));
-
-      const v = Math.min(1, Math.max(0, (avg - 10) / 140));
-      this.smooth = this.smooth * 0.92 + v * 0.08;
-
-      document.documentElement.style.setProperty('--accent', this.smooth.toFixed(4));
-      this.raf = requestAnimationFrame(tick);
-    };
-
-    this.raf = requestAnimationFrame(tick);
-  }
-
-  stop(){
-    if(this.raf) cancelAnimationFrame(this.raf);
-    this.raf = null;
-    document.documentElement.style.setProperty('--accent', '0');
-  }
-}
-
-/* =================== LISTEN (one gesture) =================== */
-function wireListen(data){
-  const btn = document.getElementById('listenBtn');
-  const audio = document.getElementById('bgAudio');
-  const hint = document.getElementById('soundHint');
-  if(!btn || !audio) return;
-
-  const src = (data?.profile?.audio_src || '').trim();
-  if(!src) return;
 
   audio.src = src;
   audio.loop = true;
   audio.preload = "auto";
+  audio.playsInline = true;
+
+  const vol =
+    typeof data?.profile?.audio_volume === "number"
+      ? data.profile.audio_volume
+      : 0.75;
+  audio.volume = vol;
 
   let playing = false;
 
-  btn.addEventListener('click', async () => {
-    try{
-      if(!playing){
-        await audio.play();
+  const setUI = (msg) => {
+    btn.setAttribute("aria-pressed", String(playing));
+    btn.textContent = playing ? "LISTENING" : "LISTEN";
+    if (hint) hint.textContent = msg || (playing ? "On." : "Tap LISTEN.");
+  };
+
+  btn.addEventListener("click", async () => {
+    try {
+      if (!playing) {
+        audio.volume = vol; // re-apply on gesture (Safari-friendly)
+        const p = audio.play();
+        if (p && typeof p.then === "function") await p;
+
         playing = true;
-        btn.textContent = "LISTENING";
-        if(hint) hint.textContent = "On.";
-      }else{
+        setUI("On.");
+      } else {
         audio.pause();
         playing = false;
-        btn.textContent = "LISTEN";
-        if(hint) hint.textContent = "Stopped.";
+        setUI("Stopped.");
       }
-    }catch(e){
-      console.log(e);
-      if(hint) hint.textContent = "Tap again.";
-    }
-  });
-}
-
-  btn.addEventListener('click', async () => {
-    try{
-      if(!on){
-        await audio.play();
-        accentReady = await accent.tryAttach(audio);
-        if(accentReady) accent.start();
-        on = true;
-        setUI();
-      }else{
-        audio.pause();
-        accent.stop();
-        on = false;
-        setUI();
-      }
-    }catch(e){
-      if(hint) hint.textContent = 'Audio blocked. Tap again or raise volume.';
+    } catch (e) {
+      console.log("LISTEN error:", e);
+      setUI("Audio blocked — tap again.");
     }
   });
 
   setUI();
 }
 
-/* =================== INIT =================== */
-(async function init(){
-  try{
+(async function init() {
+  try {
     const data = await loadData();
 
-    document.title = `${data.profile?.name ?? 'Nico Tagliente'} — Links`;
-    $('#name').textContent = data.profile?.name ?? 'Nico Tagliente';
-    $('#tagline').textContent = data.profile?.tagline ?? 'Music / Performances / Bio';
-    $('#bio').textContent = (data.profile?.bio || '').trim();
-    $('#year').textContent = new Date().getFullYear();
+    setText("name", data?.profile?.name || "Nico Tagliente");
+    setText("tagline", data?.profile?.tagline || "Music / Performances / Bio");
+    setText("bio", (data?.profile?.bio || "").trim());
+    setText("year", new Date().getFullYear());
 
     renderLinks(data.links || []);
-    renderScores(data.scores || []);
-    $('#scoreSearch').addEventListener('input', () => renderScores(data.scores || []));
+    renderScores(data.scores || [], "");
+
+    const search = document.getElementById("scoreSearch");
+    if (search) {
+      search.addEventListener("input", () => {
+        renderScores(data.scores || [], search.value);
+      });
+    }
 
     wireListen(data);
-  }catch(e){
+  } catch (e) {
     console.log(e);
-    $('#bio').textContent = 'Update data.json in the repository.';
+    const bio = document.getElementById("bio");
+    if (bio) bio.textContent = "Update data.json in the repository.";
   }
 })();
